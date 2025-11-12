@@ -201,7 +201,7 @@ async function elf_loader() {
             throw new Error("file not exist: elfldr.elf not found");
         }
         
-        await log("loading elfldr from: " + existing_path);
+        await log("loading elf from: " + existing_path);
         
         const elf_data = read_file(existing_path);
         const elf_entry_point = await elf_parse(elf_data);
