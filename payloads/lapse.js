@@ -341,6 +341,18 @@
         function free_aios2(ids, num_ids) {
             free_aios(ids, num_ids, false);
         }
+       
+        async function autoclose_yt(){
+		   const flagPath = "/data/close_youtube";
+		   if (file_exists(flagPath)) {		
+            await log("Lapse finished\nClosing Y2JB...");
+            send_notification("Lapse finished\nClosing Y2JB...");		   
+		    kill_youtube();}
+		else{
+			await log("Lapse finished\nY2JB will remain open (no flag found).");
+			send_notification("Lapse finished\nY2JB will remain open.");
+		}
+	   }
         
         function call_suspend_chain_rop(pipe_write_fd, pipe_buf, thr_tid) {
             let rop_i = 0;
@@ -1895,11 +1907,9 @@
             await elf_loader();
             
             await cleanup();
+			
+            await autoclose_yt();
             
-            await log("Lapse finished\nClosing Y2JB...");
-            send_notification("Lapse finished\nClosing Y2JB...");
-            
-            kill_youtube();
             
         } catch (e) {
             await log("Lapse error: " + e.message);
